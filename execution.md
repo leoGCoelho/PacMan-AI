@@ -4,12 +4,12 @@
     - python2 pacman.py -p searchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
 
 ## Outros Mapas Usados para Teste
-    - python2 pacman.py -l tinyMaze -p searchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
-    - python2 pacman.py -l mediumMaze -p searchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
-    - python2 pacman.py -l bigMaze -z .5 -p searchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
-    - python2 pacman.py -l tinyScaryMaze -p searchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
-    - python2 pacman.py -l mediumScaryMaze -p searchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
-    - python2 pacman.py -l bigScaryMaze -z .5 -p searchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
+    - python2 pacman.py -l tinyMaze -p SearchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
+    - python2 pacman.py -l mediumMaze -p SearchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
+    - python2 pacman.py -l bigMaze -z .5 -p SearchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
+    - python2 pacman.py -l tinyScaryMaze -p SearchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
+    - python2 pacman.py -l mediumScaryMaze -p SearchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
+    - python2 pacman.py -l bigScaryMaze -z .5 -p SearchAgent -a fn=NOME_DO_AGENTE_DE_BUSCA
 
 ## Nomes de Agentes de Busca Válidos
     - hcs = Hill Climbing Search
@@ -22,4 +22,4 @@
     - foodHeuristic = Heuristica para o Problema da Comida
     
 ### Observação:
-    - Se a versão do seu python for menorm que a 3.0, não é necessario a terminologia 2 após o comando de chamada do python.
+    - Se a versão do seu python for menor que a 3.0, não é necessario a terminologia 2 após o comando de chamada do python.
