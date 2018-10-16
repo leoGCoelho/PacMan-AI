@@ -91,9 +91,49 @@ def breadthFirstSearch(problem):
   util.raiseNotDefined()
 
 def uniformCostSearch(problem):
-  "Search the node of least total cost first. "
-  "*** YOUR CODE HERE ***"
-  util.raiseNotDefined()
+    # fila dos nodos, acoes(caminhos ou direcoes) e primeiro nodo((nodo, direcao, custo), caminho percorrido, custo do caminho)
+    queue = util.PriorityQueue()
+    action = []
+    firstNode = ((problem.getStartState(), None, 0), [], 0)
+
+    # coloca na fila um conjunto contendo o nodo e o caminho
+    queue.push(firstNode, 0)
+    while not queue.isEmpty():  # Enquanto a fila nao for vazia
+        # retira o nodo atual da fila
+        p = queue.pop()
+        # inicializa variaveis auxiliares com os valores do nodo atual
+        node = p[0][0]
+        dir = p[0][1]
+        mov = p[1]
+        costUpdated = p[2]
+
+        # se o nodo atual foi acessado, passa para o proximo
+        if node in action:
+            continue
+
+        # senao, adiciona ele aos acessados
+        action.append(node)
+
+        # se o nodo for o nodo objetivo, retorna o caminho ate ele
+        if problem.isGoalState(node):
+            return mov
+
+        # senao, vai para o proximo nodo
+        next = problem.getSuccessors(node)
+        listN = list(next)
+        cost = problem.getCostOfActions(mov) # custo ate o momento
+
+        for x in listN:
+            if x[0] not in action: # se o proximo nodo nao foi acessado
+                if problem.isGoalState(x[0]): # e eh o nodo objetivo, retorna o caminho ate ele
+                    return mov+[x[1]]
+
+                #senao, adiciona na fila o nodo atual e volta a verificar
+                nextNode = (x, mov + [x[1]], x[2] + costUpdated)
+                queue.push(nextNode, costUpdated + x[2])
+
+    # se nao encontrou um caminho, retorna nada
+    return []
 
 def nullHeuristic(state, problem=None):
   """
@@ -101,6 +141,83 @@ def nullHeuristic(state, problem=None):
   goal in the provided SearchProblem.  This heuristic is trivial.
   """
   return 0
+
+def hillClimbingSearch(problem, heuristic=nullHeuristic):
+    # caminho ate o objetivo, variavel inicial(nodo), custo atual e custo do filho com valores iniciais e fila
+    path = []
+    node = ((problem.getStartState(), []), heuristic(problem.getStartState(), problem))
+    cost = 1
+    costSucc = 0
+    queue = util.PriorityQueue()
+
+    while cost > costSucc:     # Loop enquanto nao encontrar o menor caminho
+        # custo atual = heuristica do nodo atual
+        cost = heuristic(node, problem)
+
+        # se o nodo atual for o nodo objetivo, retorna o caminho
+        if problem.isGoalState(node):
+            return path
+
+        # senao
+        next = problem.getSuccessors(node[0][0]) # proximo nodo
+
+        for i in next:
+            # atualiza valor do custo
+            costUpdated = problem.getCostOfActions([i[1]]) + heuristic(i[0], problem)
+            # coloca na fila infos do nodo
+            queue.push((i[0], i[1]), costUpdated)
+
+        nodeNext = queue.pop()  # proximo nodo recebe o que esta na fila
+        costSucc = problem.getCostOfActions([nodeNext[1]]) + heuristic(nodeNext[0], problem) -1 # custo do filho
+        path.append(nodeNext[1])    # nodo eh adicionado aos caminhos atuais
+        node = ((nodeNext[0], nodeNext[1]), costSucc)
+
+    return path # retorna o caminho atual
+
+
+def simmulatedAnnealingSearch(problem, heuristic=nullHeuristic):
+    # fila dos nodos, nodos expandidos e caminho ate o objetivo
+    queue = util.PriorityQueue()
+    exp = set()
+    path = []
+
+    # variaveis iniciais(nodo e custo)
+    firstNode = problem.getStartState()
+    cost = 0
+
+    # coloca na fila um conjunto contendo o nodo, o caminho e o custo
+    queue.push((firstNode, path, cost), heuristic(firstNode, problem))
+    while not queue.isEmpty():  # Enquanto a fila nao for vazia
+        # Cria uma variavel para guardar o pop feito na fila, e variaveis para o nodo, movimentos ate esse no e o custo ate o momento
+        p = queue.pop()
+        node = p[0]
+        mov = p[1]
+        costUpdated = p[2]
+
+        # Se o nodo atual e o nodo objetivo, achou o objetivo e retorna os movimentos
+        if problem.isGoalState(node):
+            return mov
+
+        # Se o nodo atual tive sido expandido, continua a procura no proximo
+        if node in exp:
+            continue
+
+        # Parametros do proximo nodos
+        exp.add(node)
+        next = problem.getSuccessors(node)
+        listN = list(next)
+
+        # Procura pelo nodo seguinte ao atual e se ja foi expandido, continua para o proximo e assim sucessivamente
+        for n in listN:
+            if n[0] in exp:
+                continue
+
+            # Coloca no nodo da fila primeiro um conjunto contendo o nodo atual, o movimento ate ele e seu custo + custos anteriores
+            # Depois um conjunto com o custo dele + a heuristica do nodo + os custos anteriores somados
+            queue.push((n[0], mov+[n[1]], costUpdated+n[2]), heuristic(n[0], problem))
+
+        # Se nao encontrou um caminho, retorna p melhor caminho achado
+    return mov
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     # fila dos nodos, nodos expandidos e caminho ate o objetivo
@@ -121,7 +238,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
         mov = p[1]
         costUpdated = p[2]
 
-        # Se o nodo atual e o nodo objetivo, achou o objetivo e retorna os movimentos
+        # Se o nodo atual eh o nodo objetivo, achou o objetivo e retorna os movimentos
         if problem.isGoalState(node):
             return mov
 
@@ -152,3 +269,5 @@ bfs = breadthFirstSearch
 dfs = depthFirstSearch
 astar = aStarSearch
 ucs = uniformCostSearch
+sas = simmulatedAnnealingSearch
+hcs = hillClimbingSearch
