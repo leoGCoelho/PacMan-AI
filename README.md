@@ -30,5 +30,5 @@ Project created in python2 implementing an A.I. who plays Pac-Man using:
     - manhattanHeuristic = Manhattan Heuristic
     - foodHeuristic = Food Problem Heuristic
     
-#### Observation (in PT-BR)
+## Observation (in PT-BR)
     - Se a versão do seu python for menor que a 3.0, não é necessario a terminologia 2 após o comando de chamada do python.
