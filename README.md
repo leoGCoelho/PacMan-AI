@@ -1,4 +1,6 @@
 # Pac-Man-AI
+<img src="http://ai.berkeley.edu/projects/release/search/v1/001/maze.png" width="auto">
+
 ## Resume
 Project created in python2 implementing an A.I. who plays Pac-Man using:
   - A* search algorithm;
@@ -7,6 +9,8 @@ Project created in python2 implementing an A.I. who plays Pac-Man using:
   - Uniform Cost;
   
  All this algorithms are used to control the character to finish the game.
+ 
+ <img src="http://ai.berkeley.edu/images/pacman_game.gif" width="auto">
  
 ## Execution Commands (by terminal)
 
