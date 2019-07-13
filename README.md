@@ -1,4 +1,5 @@
 # Pac-Man-AI
+#### en/US | <a href="https://github.com/leoGCoelho/PacMan-AI/blob/master/README_PTBR">pt/BR</a>
 <img src="http://ai.berkeley.edu/projects/release/search/v1/001/maze.png" width="auto">
 
 ## Resume
